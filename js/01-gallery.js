@@ -4,10 +4,9 @@ const refs = {
     galleryList: document.querySelector(`.gallery`),
 }
 
-
-
-refs.galleryList.innerHTML = createMarkImg(galleryItems);
 refs.galleryList.addEventListener(`click`, onClickElementGallery);
+refs.galleryList.innerHTML = createMarkImg(galleryItems);
+let instance = {};
 
 
 function createMarkImg(array) {
@@ -32,15 +31,26 @@ function onClickElementGallery(event) {
         return;
      }
   const originalImg = event.target.parentNode.href;
-  const instance = basicLightbox.create(`
-  <img src="${originalImg}" width="800" height="600">
-`)
+  openLightbox(originalImg);
+  window.addEventListener(`keydown`, onEscCloseModalWind);
 
-instance.show()
-     
 }
 
+function openLightbox(img) {
+  instance = basicLightbox.create(`
+  <img src="${img}" width="800" height="600">
+`);
+instance.show();
 
+}
+
+function onEscCloseModalWind(event) {
+ if(event.code.toUpperCase() != "ESCAPE") {
+  return;
+ }
+ instance.close();
+ window.removeEventListener(`keydown`, onEscCloseModalWind);
+}
 
 
 

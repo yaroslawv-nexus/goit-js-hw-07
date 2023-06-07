@@ -5,11 +5,11 @@ const refs = {
 }
 
 refs.galleryList.addEventListener(`click`, onClickElementGallery);
-refs.galleryList.innerHTML = createMarkImg(galleryItems);
-let instance = {};
+refs.galleryList.innerHTML = createGallery(galleryItems);
+let modalImg = {};
 
 
-function createMarkImg(array) {
+function createGallery(array) {
      return array.map(({preview, original, description}) => {
         return `<li class="gallery__item">
         <a class="gallery__link" href="${original}">
@@ -37,10 +37,10 @@ function onClickElementGallery(event) {
 }
 
 function openLightbox(img) {
-  instance = basicLightbox.create(`
+  modalImg = basicLightbox.create(`
   <img src="${img}" width="800" height="600">
 `);
-instance.show();
+modalImg.show();
 
 }
 
@@ -48,7 +48,7 @@ function onEscCloseModalWind(event) {
  if(event.code.toUpperCase() != "ESCAPE") {
   return;
  }
- instance.close();
+ modalImg.close();
  window.removeEventListener(`keydown`, onEscCloseModalWind);
 }
 
